@@ -2,7 +2,7 @@ package webtest.core;
 
 import java.util.Map;
 
-import webtest.core.keys.InputKeys;
+import webtest.keys.InputKeys;
 
 public class WtBaseTest {
 

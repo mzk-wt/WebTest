@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import webtest.core.WtBaseTest;
-import webtest.core.keys.InputKeys;
+import webtest.keys.InputKeys;
 
 public class TopamTest extends WtBaseTest {
 

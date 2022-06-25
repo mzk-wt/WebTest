@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import webtest.core.keys.ActionType;
-import webtest.core.keys.CsvKeys;
+import webtest.keys.ActionType;
+import webtest.keys.CsvKeys;
 
 /**
  * シナリオアクションクラス

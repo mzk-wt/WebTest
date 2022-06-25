@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import webtest.core.keys.CsvKeys;
-import webtest.core.keys.InputKeys;
+import webtest.keys.CsvKeys;
+import webtest.keys.InputKeys;
 
 /**
  * シナリオクラス
