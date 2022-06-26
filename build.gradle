@@ -25,8 +25,23 @@ dependencies {
     implementation 'com.google.guava:guava:28.2-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.7.2'
 
     // Selenium
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+}
+
+test {
+    // JUnit platform を使う設定
+    useJUnitPlatform()
+
+    testLogging {
+        // テスト時の標準出力と標準エラー出力を表示する
+        showStandardStreams true
+        // イベントを出力する (TestLogEvent)
+        events 'started', 'skipped', 'passed', 'failed'
+        // 例外発生時の出力設定 (TestExceptionFormat)
+        exceptionFormat 'full'
+    }
 }

@@ -22,7 +22,7 @@ public class WtBaseTest {
      * テストを開始します.
      * @param params 初期化パラメータ
      */
-    protected void start(Map<InputKeys, String> params) {
+    public void start(Map<InputKeys, String> params) {
         try {
             // 初期化
             init(params);

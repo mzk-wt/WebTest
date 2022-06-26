@@ -6,7 +6,7 @@ import java.util.Map;
 import webtest.core.WtBaseTest;
 import webtest.keys.InputKeys;
 
-public class TopamTest extends WtBaseTest {
+public class WebTest extends WtBaseTest {
 
     /**
      * メインメソッド
@@ -20,6 +20,6 @@ public class TopamTest extends WtBaseTest {
         params.put(InputKeys.OUTPUT_PATH, "D:\\work\\topamtest\\topamtest\\out");
         params.put(InputKeys.SCENARIO_FILE, "D:\\work\\topamtest\\topamtest\\selenium\\scenario\\test.csv");
 
-        new TopamTest().start(params);
+        new WebTest().start(params);
     }
 }
