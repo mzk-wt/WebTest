@@ -10,14 +10,16 @@ import webtest.keys.InputKeys;
 
 public class Wt001Test extends WtTest {
 
+    String rootPath = System.getProperty("user.dir");
+
     @Test
     @DisplayName("ブラウザ起動確認")
     void testOpenUrl() {
         Map<InputKeys, String> params = new HashMap<>();
         params.put(InputKeys.BROWSE_TYPE, "chrome");
-        params.put(InputKeys.BROWSE_DRIVER, "selenium/chromedriver/102/chromedriver.exe");
-        params.put(InputKeys.OUTPUT_PATH, "out/test001");
-        params.put(InputKeys.SCENARIO_FILE, "src/test/resource/test001.csv");
+        params.put(InputKeys.BROWSE_DRIVER, "selenium/chromedriver/102/mac64/chromedriver");
+        params.put(InputKeys.OUTPUT_PATH, rootPath + "/out/test001");
+        params.put(InputKeys.SCENARIO_FILE, rootPath + "/src/test/resource/scenario/test001.csv");
 
         WebTest test = new WebTest();
         test.start(params);
