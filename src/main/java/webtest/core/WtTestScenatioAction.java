@@ -69,7 +69,7 @@ public class WtTestScenatioAction {
 //          webDriver.saveScreenshotAsFile("C:\\Users\\y_mizuki.KEINS-AD\\デスクトップ", "test.png");
 
     /**
-     * 【アクション:A0】
+     * 【アクション:OPEN】
      * ページを表示します.
      * <pre>
      * (CSVパラメータ)
@@ -78,7 +78,7 @@ public class WtTestScenatioAction {
      * @param driver WEBドライバ
      */
     @SuppressWarnings("unused")
-    private void executeActionA0(WtWebDriver driver) {
+    private void executeActionOPEN(WtWebDriver driver) {
         driver.get(actionParams[0]);
     }
 }
