@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import webtest.actions.WtAction;
 import webtest.keys.ActionType;
 import webtest.keys.CsvKeys;
 
@@ -47,10 +48,13 @@ public class WtTestScenatioAction {
      * アクションを実行します.
      * @param driver WEBドライバ
      */
+    @SuppressWarnings("unchecked")
     public void execute(WtWebDriver driver) {
         try {
-            Method m = getClass().getDeclaredMethod("executeAction" + actionType.name(), WtWebDriver.class);
-            m.invoke(this, driver);
+            Class<WtAction<?>> c = (Class<WtAction<?>>) Class.forName("webtest.actions.WtAction" + actionType.name());
+            Object obj = c.getDeclaredConstructor().newInstance();
+            Method m = c.getDeclaredMethod("executeAction", WtWebDriver.class, String[].class);
+            m.invoke(obj, driver, actionParams);
 
         } catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
@@ -60,6 +64,10 @@ public class WtTestScenatioAction {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
     }
 //          // タイトル取得
@@ -67,18 +75,4 @@ public class WtTestScenatioAction {
     //
 //          // スクリーンショット取得
 //          webDriver.saveScreenshotAsFile("C:\\Users\\y_mizuki.KEINS-AD\\デスクトップ", "test.png");
-
-    /**
-     * 【アクション:OPEN】
-     * ページを表示します.
-     * <pre>
-     * (CSVパラメータ)
-     * [0]:URL
-     * </pre>
-     * @param driver WEBドライバ
-     */
-    @SuppressWarnings("unused")
-    private void executeActionOPEN(WtWebDriver driver) {
-        driver.get(actionParams[0]);
-    }
 }
