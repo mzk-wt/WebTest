@@ -30,6 +30,7 @@ dependencies {
 
     // Selenium
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.2.1'
 }
 
 test {

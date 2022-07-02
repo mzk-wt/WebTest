@@ -14,10 +14,10 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import webtest.keys.InputKeys;
 
 /**
@@ -28,15 +28,24 @@ public class WtWebDriver {
     /** WEBドライバのインスタンス */
     private WebDriver driver;
 
+    public static final String BROWSE_TYPE_CHROME = "chrome";
+    public static final String BROWSE_TYPE_EDGE = "edge";
+    public static final String BROWSE_TYPE_FIREFOX = "firefox";
+
     /**
      * コンストラクタ.
      * @params params 初期化パラメータ
      */
     public WtWebDriver(Map<InputKeys, String> params) {
-        // TODO
-        if ("chrome".equals(params.get(InputKeys.BROWSE_TYPE))) {
-            System.setProperty("webdriver.chrome.driver", params.get(InputKeys.BROWSE_DRIVER));
-            driver = new ChromeDriver();
+        String browseType = params.get(InputKeys.BROWSE_TYPE);
+        if (BROWSE_TYPE_CHROME.equals(browseType)) {
+            driver = WebDriverManager.chromedriver().create();
+
+        } else if (BROWSE_TYPE_EDGE.equals(browseType)) {
+            driver = WebDriverManager.edgedriver().create();
+
+        } else if (BROWSE_TYPE_FIREFOX.equals(browseType)) {
+            driver = WebDriverManager.firefoxdriver().create();
         }
     }
 

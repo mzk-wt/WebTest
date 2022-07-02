@@ -7,9 +7,6 @@ public enum InputKeys {
     // ブラウザの種類
     BROWSE_TYPE,
 
-    // ブラウザドライバのパス
-    BROWSE_DRIVER,
-
     // 出力フォルダのパス
     OUTPUT_PATH,
 
