@@ -47,14 +47,19 @@ public class WtTestScenatioAction {
     /**
      * アクションを実行します.
      * @param driver WEBドライバ
+     * @param values シナリオ内で取得した値を持ち運ぶためのマップ
      */
     @SuppressWarnings("unchecked")
-    public void execute(WtWebDriver driver) {
+    public void execute(WtWebDriver driver, Map<String, Object> values) {
         try {
-            Class<WtAction<?>> c = (Class<WtAction<?>>) Class.forName("webtest.actions.WtAction" + actionType.name());
+            Class<WtAction> c = (Class<WtAction>) Class.forName("webtest.actions.WtAction" + actionType.name());
             Object obj = c.getDeclaredConstructor().newInstance();
-            Method m = c.getDeclaredMethod("executeAction", WtWebDriver.class, String[].class);
-            m.invoke(obj, driver, actionParams);
+            Method m = c.getDeclaredMethod("executeAction", WtWebDriver.class, String[].class, Map.class);
+            boolean result = (boolean) m.invoke(obj, driver, actionParams, values);
+
+            if (!result) {
+                throw new RuntimeException("異常発生：" + actionType.name());
+            }
 
         } catch (NoSuchMethodException | SecurityException e) {
             e.printStackTrace();

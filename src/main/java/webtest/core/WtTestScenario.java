@@ -27,6 +27,9 @@ public class WtTestScenario {
     /** 現在実行中のアクション */
     private WtTestScenatioAction currentAction;
 
+    /** シナリオ内で取得した値を持ち運ぶためのマップ  */
+    private Map<String, Object> scenarioValues = new HashMap<>();
+
     /**
      * コンストラクタ.
      * @param params 初期化パラメータ
@@ -99,7 +102,7 @@ public class WtTestScenario {
      */
     public void execute(WtWebDriver driver) {
         while (getNextAction() != null) {
-            currentAction.execute(driver);
+            currentAction.execute(driver, scenarioValues);
         }
     }
 }

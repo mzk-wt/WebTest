@@ -1,5 +1,7 @@
 package webtest.actions;
 
+import java.util.Map;
+
 import webtest.core.WtWebDriver;
 
 /**
@@ -9,15 +11,17 @@ import webtest.core.WtWebDriver;
  * [0]:URL
  * </pre>
  */
-public class WtActionOPEN implements WtAction<Void> {
+public class WtActionOPEN implements WtAction {
 
     /**
      * アクション実行.
      * @param driver WEBドライバ
      * @param params アクションパラメータ
+     * @param values シナリオ内で取得した値を持ち運ぶためのマップ
+     * @return true=正常終了/false=異常終了
      */
-    public Void executeAction(WtWebDriver driver, String[] params) {
+    public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
         driver.get(params[0]);
-        return null;
+        return true;
     }
 }
