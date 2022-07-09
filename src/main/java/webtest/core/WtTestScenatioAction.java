@@ -51,6 +51,10 @@ public class WtTestScenatioAction {
      */
     @SuppressWarnings("unchecked")
     public void execute(WtWebDriver driver, Map<String, Object> values) {
+        if (actionType.equals(ActionType.NONE)) {
+            return;
+        }
+
         try {
             Class<WtAction> c = (Class<WtAction>) Class.forName("webtest.actions.WtAction" + actionType.name());
             Object obj = c.getDeclaredConstructor().newInstance();
@@ -75,9 +79,4 @@ public class WtTestScenatioAction {
             e.printStackTrace();
         }
     }
-//          // タイトル取得
-//          System.out.println(webDriver.getTitle());
-    //
-//          // スクリーンショット取得
-//          webDriver.saveScreenshotAsFile("C:\\Users\\y_mizuki.KEINS-AD\\デスクトップ", "test.png");
 }
