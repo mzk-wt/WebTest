@@ -2,7 +2,7 @@ package webtest.actions;
 
 import java.util.Map;
 
-import webtest.core.WtFunc;
+import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
 
 /**
@@ -24,13 +24,13 @@ public class WtActionSAVECAPTURE implements WtAction {
      */
     public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
         String path = values.containsKey("@SC_SAVEPATH") ? (String) values.get("@SC_SAVEPATH") : "";
-        if (0 < params.length && WtFunc.isNotBlank(params[0])) {
+        if (0 < params.length && WtUtils.isNotBlank(params[0])) {
             path = params[0];
         }
 
         int seq = ((Integer) values.get("@SC_SEQ")) + 1;
         String filename = values.containsKey("@SC_FILENAME") ? (String) values.get("@SC_FILENAME") + seq : "";
-        if (1 < params.length && WtFunc.isNotBlank(params[1])) {
+        if (1 < params.length && WtUtils.isNotBlank(params[1])) {
             filename = params[1];
 
         } else {
