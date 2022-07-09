@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 
+import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
 import webtest.keys.ByType;
 
@@ -29,7 +30,7 @@ public class WtActionCLICK implements WtAction {
         if (1 < params.length) {
             type = ByType.valueOf(params[1].toUpperCase());
         }
-        By by = type.getByInstance(params[0]);
+        By by = type.getByInstance(WtUtils.formatValues(params[0], values));
 
         driver.clickElement(by);
         return true;

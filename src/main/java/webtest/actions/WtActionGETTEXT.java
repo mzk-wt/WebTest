@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 
+import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
 import webtest.keys.ByType;
 
@@ -30,7 +31,7 @@ public class WtActionGETTEXT implements WtAction {
         if (2 < params.length) {
             type = ByType.valueOf(params[2].toUpperCase());
         }
-        By by = type.getByInstance(params[1]);
+        By by = type.getByInstance(WtUtils.formatValues(params[1], values));
 
         values.put(params[0], driver.getText(by));
         return true;

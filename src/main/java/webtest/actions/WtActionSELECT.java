@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 
+import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
 import webtest.keys.ByType;
 
@@ -31,7 +32,7 @@ public class WtActionSELECT implements WtAction {
         if (3 < params.length) {
             type = ByType.valueOf(params[3].toUpperCase());
         }
-        By by = type.getByInstance(params[2]);
+        By by = type.getByInstance(WtUtils.formatValues(params[2], values));
 
         switch (params[0]) {
         case "0":
