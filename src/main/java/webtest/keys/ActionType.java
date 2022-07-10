@@ -16,6 +16,10 @@ public enum ActionType {
     REFRESH,
     // 待機
     WAIT,
+    // ウィンドウハンドル取得
+    GETWINHANDLE,
+    // ウィンドウを切り替える
+    WINSWITCH,
     // ウィンドウを閉じる
     CLOSE,
     // ウィンドウサイズを変更

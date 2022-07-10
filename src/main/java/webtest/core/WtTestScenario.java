@@ -55,6 +55,10 @@ public class WtTestScenario {
 
                 String line;
                 while ((line = br.readLine()) != null) {
+                    if (WtUtils.isBlank(line)) {
+                        continue;
+                    }
+
                     String[] data = Arrays.copyOf(line.split(","), 6);
 
                     Map<CsvKeys, String> actionParams = new HashMap<>();

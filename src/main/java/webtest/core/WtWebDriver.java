@@ -98,6 +98,21 @@ public class WtWebDriver {
     }
 
     /**
+     * ウィンドウハンドルを取得します.
+     * @return カレントウィンドウのハンドル
+     */
+    public String getWindowHandle() {
+        return driver.getWindowHandle();
+    }
+
+    /**
+     * ウィンドウを切り替えます.
+     */
+    public void switchWindow(String nameOrHandle) {
+        driver.switchTo().window(nameOrHandle);
+    }
+
+    /**
      * ウィンドウを閉じます.
      */
     public void close() {
