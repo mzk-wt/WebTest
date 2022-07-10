@@ -43,6 +43,9 @@ public class WtTestScenario {
      * @param params 初期化パラメータ
      */
     private void init(Map<InputKeys, String> params) {
+        // 共通変数の準備
+        prepareCommonScenarioValues();
+
         // CSVファイルを1行ずつ読込んでシナリオアクションを初期化する
         BufferedReader br = null;
         try {
@@ -72,6 +75,18 @@ public class WtTestScenario {
         } catch (IOException e) {
             throw new RuntimeException("CSVファイル読込み失敗", e);
         }
+    }
+
+    /**
+     * 共通変数を準備します.
+     */
+    private void prepareCommonScenarioValues() {
+        // カレントディレクトリ
+        scenarioValues.put("@ROOT_PATH", System.getProperty("user.dir"));
+        // スクリーンショット保存先
+        scenarioValues.put("@SC_SAVEPATH", System.getProperty("user.dir") + "/../");
+        // スクリーンショットファイル連番
+        scenarioValues.put("@SC_SEQ", 1);
     }
 
     /**
