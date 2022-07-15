@@ -10,7 +10,7 @@ import webtest.core.WtWebDriver;
  * <pre>
  * (アクションパラメータ)
  * [0]:出力する値
- * [1]:出力先（0:ファイル, 1:標準出力, 2:両方）
+ * [1]:出力先（0:ファイル, 1:標準出力, 2:両方）(省略可。省略時は1)
  * </pre>
  */
 public class WtActionLOG implements WtAction {

@@ -27,7 +27,7 @@ public class WtActionCLICK implements WtAction {
      */
     public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
         ByType type = ByType.CSS;
-        if (1 < params.length) {
+        if (WtUtils.isNotBlank(params[1])) {
             type = ByType.valueOf(params[1].toUpperCase());
         }
         By by = type.getByInstance(WtUtils.formatValues(params[0], values));

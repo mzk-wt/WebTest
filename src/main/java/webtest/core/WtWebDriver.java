@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -103,6 +104,14 @@ public class WtWebDriver {
      */
     public String getWindowHandle() {
         return driver.getWindowHandle();
+    }
+
+    /**
+     * ウィンドウハンドルを取得します.
+     * @return 全てのウィンドウのハンドル
+     */
+    public Set<String> getWindowHandles() {
+        return driver.getWindowHandles();
     }
 
     /**
