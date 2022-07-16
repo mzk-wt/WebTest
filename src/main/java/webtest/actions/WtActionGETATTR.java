@@ -29,7 +29,7 @@ public class WtActionGETATTR implements WtAction {
      */
     public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
         ByType type = ByType.CSS;
-        if (3 < params.length) {
+        if (WtUtils.isNotBlank(params[3])) {
             type = ByType.valueOf(params[3].toUpperCase());
         }
         By by = type.getByInstance(WtUtils.formatValues(params[2], values));

@@ -21,16 +21,21 @@ public abstract class WtTest {
 
     protected abstract Map<InputKeys, String> getTestParams(String scenarioCsv);
 
-    @Test
-    @DisplayName("ブラウザナビゲーション確認")
-    void testNavigation() {
+    protected String doTest(String scenarioFile) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(bos);
         System.setOut(ps);
 
-        new WebTest().start(getTestParams("testNavigation.csv"));
+        new WebTest().start(getTestParams(scenarioFile));
 
-        assertEquals(bos.toString(),
+        return bos.toString();
+    }
+
+    @Test
+    @DisplayName("ブラウザナビゲーション確認")
+    void testNavigation() {
+        String out = doTest("testNavigation.csv");
+        assertEquals(out,
                   "OPEN:WebTest(page1)\n"
                 + "NAVIGATE:WebTest(page2)\n"
                 + "BACK:WebTest(page1)\n"
@@ -39,4 +44,40 @@ public abstract class WtTest {
                 + "WINSWITCH:WebTest(page3)\n"
                 + "WINSWITCH:WebTest(page2)\n");
     }
+
+    @Test
+    @DisplayName("URL取得確認")
+    void testGetUrl() {
+        String out = doTest("testGetUrl.csv");
+        assertEquals(out,
+                  "OPEN:WebTest(page1)\n"
+                + "GETURL:file://" + ROOT_PATH + "/src/test/resource/samplepage/page1.html\n");
+    }
+
+    @Test
+    @DisplayName("タイトル取得確認")
+    void testGetTitle() {
+        String out = doTest("testGetTitle.csv");
+        assertEquals(out,
+                  "TITLE:WebTest(page1)\n");
+    }
+
+    @Test
+    @DisplayName("テキスト取得確認")
+    void testGetText() {
+        String out = doTest("testGetText.csv");
+        assertEquals(out,
+                  "OPEN:WebTest(page1)\n"
+                + "text(classname)\n"
+                + "text(classname)\n"
+                + "text(classname)\n"
+                + "text(id1)\n"
+                + "text(linktext)\n"
+                + "text(name1)\n"
+                + "text(name2-1)\n"
+                + "text(linktext)\n"
+                + "text(classname)\n"
+                + "text(id1)\n");
+    }
+
 }

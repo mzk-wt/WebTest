@@ -28,7 +28,7 @@ public class WtActionGETTEXT implements WtAction {
      */
     public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
         ByType type = ByType.CSS;
-        if (2 < params.length) {
+        if (WtUtils.isNotBlank(params[2])) {
             type = ByType.valueOf(params[2].toUpperCase());
         }
         By by = type.getByInstance(WtUtils.formatValues(params[1], values));

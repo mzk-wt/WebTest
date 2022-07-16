@@ -1,0 +1,4 @@
+NONE,PAGE1を開いてタイトル取得
+OPEN,file://{{@ROOT_PATH}}/src/test/resource/samplepage/page1.html
+GETTITLE,TITLE
+LOG,TITLE:{{TITLE}}

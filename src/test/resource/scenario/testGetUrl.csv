@@ -1,0 +1,8 @@
+NONE,PAGE1を開く
+OPEN,file://{{@ROOT_PATH}}/src/test/resource/samplepage/page1.html
+GETTITLE,TITLE
+LOG,OPEN:{{TITLE}}
+
+NONE,URL取得
+GETURL,URL
+LOG,GETURL:{{URL}}

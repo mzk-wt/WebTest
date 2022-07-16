@@ -1,10 +1,10 @@
 NONE,PAGE1を開く
-OPEN,file:///{{@ROOT_PATH}}/src/test/resource/samplepage/page1.html
+OPEN,file://{{@ROOT_PATH}}/src/test/resource/samplepage/page1.html
 GETTITLE,TITLE
 LOG,OPEN:{{TITLE}}
 
 NONE,PAGE2へ遷移する
-NAVIGATE,file:///{{@ROOT_PATH}}/src/test/resource/samplepage/page2.html
+NAVIGATE,file://{{@ROOT_PATH}}/src/test/resource/samplepage/page2.html
 GETTITLE,TITLE
 LOG,NAVIGATE:{{TITLE}}
 
