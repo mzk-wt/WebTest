@@ -77,7 +77,8 @@ public abstract class WtTest {
                 + "text(name2-1)\n"
                 + "text(linktext)\n"
                 + "text(classname)\n"
-                + "text(id1)\n");
+                + "text(id1)\n"
+                + "text(name2-2)\n");
     }
 
 }

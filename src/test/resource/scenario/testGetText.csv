@@ -42,3 +42,7 @@ LOG,{{TEXT}}
 NONE,XPathで要素を指定してテキストを取得
 GETTEXT,TEXT,//p[@id="id1"],XPATH
 LOG,{{TEXT}}
+
+NONE,複数ある要素から２番目の要素を指定してテキストを取得
+GETTEXT,TEXT,name2,NAME,1
+LOG,{{TEXT}}

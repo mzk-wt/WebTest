@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -200,6 +201,15 @@ public class WtWebDriver {
     }
 
     /**
+     * 要素を取得します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @return
+     */
+    public List<WebElement> findElements(By by) {
+        return driver.findElements(by);
+    }
+
+    /**
      * テキストを取得します.
      * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
      * @return テキストの値
@@ -207,6 +217,17 @@ public class WtWebDriver {
     public String getText(By by) {
         WebElement elem = findElement(by);
         return elem.getText();
+    }
+
+    /**
+     * テキストを取得します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param elemNo 要素番号
+     * @return テキストの値
+     */
+    public String getText(By by, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        return elem.get(elemNo).getText();
     }
 
     /**
@@ -218,6 +239,18 @@ public class WtWebDriver {
     public String getAttribute(By by, String attr) {
         WebElement elem = findElement(by);
         return elem.getAttribute(attr);
+    }
+
+    /**
+     * 属性を取得します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param attr 属性
+     * @param elemNo 要素番号
+     * @return 属性の値
+     */
+    public String getAttribute(By by, String attr, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        return elem.get(elemNo).getAttribute(attr);
     }
 
     /**
@@ -270,6 +303,17 @@ public class WtWebDriver {
     }
 
     /**
+     * キーボードから入力を行います.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param keys 入力する値
+     * @param elemNo 要素番号
+     */
+    public void sendKeys(By by, String keys, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        elem.get(elemNo).sendKeys(keys);
+    }
+
+    /**
      * 順番を指定してドロップダウンを選択します.
      * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
      * @param index 順番
@@ -277,6 +321,18 @@ public class WtWebDriver {
     public void selectByIndex(By by, int index) {
         WebElement elem = findElement(by);
         Select select = new Select(elem);
+        select.selectByIndex(index);
+    }
+
+    /**
+     * 順番を指定してドロップダウンを選択します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param index 順番
+     * @param elemNo 要素番号
+     */
+    public void selectByIndex(By by, int index, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        Select select = new Select(elem.get(elemNo));
         select.selectByIndex(index);
     }
 
@@ -292,6 +348,18 @@ public class WtWebDriver {
     }
 
     /**
+     * value属性の値を指定してドロップダウンを選択します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param value value属性の値
+     * @param elemNo 要素番号
+     */
+    public void selectByValue(By by, String value, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        Select select = new Select(elem.get(elemNo));
+        select.selectByValue(value);
+    }
+
+    /**
      * 表示テキストを指定してドロップダウンを選択します.
      * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
      * @param text 表示テキスト
@@ -303,11 +371,32 @@ public class WtWebDriver {
     }
 
     /**
+     * 表示テキストを指定してドロップダウンを選択します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param text 表示テキスト
+     * @param elemNo 要素番号
+     */
+    public void selectByVisibleText(By by, String text, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        Select select = new Select(elem.get(elemNo));
+        select.selectByVisibleText(text);
+    }
+
+    /**
      * 要素をクリックします.
      * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
      */
     public void clickElement(By by) {
         findElement(by).click();
+    }
+
+    /**
+     * 要素をクリックします.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param elemNo 要素番号
+     */
+    public void clickElement(By by, int elemNo) {
+        findElements(by).get(elemNo).click();
     }
 
     /**
@@ -332,6 +421,18 @@ public class WtWebDriver {
         actions.perform();
     }
 
+    /**
+     * 指定された要素までスクロールします.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param elemNo 要素番号
+     */
+    public void scrollToElement(By by, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(elem.get(elemNo));
+        actions.perform();
+    }
+
     /*****************************************************************
      * その他の処理
      *****************************************************************/
@@ -346,6 +447,17 @@ public class WtWebDriver {
     }
 
     /**
+     * 要素が表示されているかどうかを判定します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param elemNo 要素番号
+     * @return true=表示／false=非表示
+     */
+    public boolean isDisplaye(By by, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        return elem.get(elemNo).isDisplayed();
+    }
+
+    /**
      * 要素が有効かどうかを判定します.
      * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
      * @return true=有効／false=無効
@@ -353,6 +465,17 @@ public class WtWebDriver {
     public boolean isEnabled(By by) {
         WebElement elem = findElement(by);
         return elem.isEnabled();
+    }
+
+    /**
+     * 要素が有効かどうかを判定します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param elemNo 要素番号
+     * @return true=有効／false=無効
+     */
+    public boolean isEnabled(By by, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        return elem.get(elemNo).isEnabled();
     }
 
     /**
@@ -364,4 +487,16 @@ public class WtWebDriver {
         WebElement elem = findElement(by);
         return elem.isSelected();
     }
+
+    /**
+     * 要素が選択されているかどうかを判定します.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param elemNo 要素番号
+     * @return true=選択されている／false=選択されていない
+     */
+    public boolean isSelected(By by, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        return elem.get(elemNo).isSelected();
+    }
+
 }

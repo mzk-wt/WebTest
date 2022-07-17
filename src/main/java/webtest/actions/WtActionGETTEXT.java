@@ -15,6 +15,7 @@ import webtest.keys.ByType;
  * [0]:取得した値を識別するためのキー
  * [1]:要素を特定するための検索文字列
  * [2]:検索方法（省略可、省略時はCSSセレクタで検索する）(@see {@link webtest.keys.ByType})
+ * [3]:要素番号（省略可、省略時は0）
  * </pre>
  */
 public class WtActionGETTEXT implements WtAction {
@@ -33,7 +34,12 @@ public class WtActionGETTEXT implements WtAction {
         }
         By by = type.getByInstance(WtUtils.formatValues(params[1], values));
 
-        values.put(params[0], driver.getText(by));
+        int elemNo = 0;
+        if (WtUtils.isNotBlank(params[3])) {
+            elemNo = Integer.parseInt(params[3]);
+        }
+
+        values.put(params[0], driver.getText(by, elemNo));
         return true;
     }
 }
