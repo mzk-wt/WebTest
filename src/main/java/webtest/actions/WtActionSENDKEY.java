@@ -21,19 +21,21 @@ public class WtActionSENDKEY implements WtAction {
 
     /**
      * アクション実行.
-     * @param driver WEBドライバ
-     * @param params アクションパラメータ
-     * @param values シナリオ内で取得した値を持ち運ぶためのマップ
+     * @param params アクション実行用パラメータ
      * @return true=正常終了/false=異常終了
      */
-    public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
-        ByType type = ByType.CSS;
-        if (WtUtils.isNotBlank(params[2])) {
-            type = ByType.valueOf(params[2].toUpperCase());
-        }
-        By by = type.getByInstance(WtUtils.formatValues(params[1], values));
+    public boolean executeAction(ExecuteActionParameter params) {
+        WtWebDriver driver = params.driver;
+        String[] actionParams = params.actionParams;
+        Map<String, Object> values = params.values;
 
-        driver.sendKeys(by, WtUtils.formatValues(params[0], values));
+        ByType type = ByType.CSS;
+        if (WtUtils.isNotBlank(actionParams[2])) {
+            type = ByType.valueOf(actionParams[2].toUpperCase());
+        }
+        By by = type.getByInstance(WtUtils.formatValues(actionParams[1], values));
+
+        driver.sendKeys(by, WtUtils.formatValues(actionParams[0], values));
         return true;
     }
 }

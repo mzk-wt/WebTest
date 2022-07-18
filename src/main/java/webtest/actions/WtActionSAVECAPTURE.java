@@ -17,20 +17,22 @@ public class WtActionSAVECAPTURE implements WtAction {
 
     /**
      * アクション実行.
-     * @param driver WEBドライバ
-     * @param params アクションパラメータ
-     * @param values シナリオ内で取得した値を持ち運ぶためのマップ
+     * @param params アクション実行用パラメータ
      * @return true=正常終了/false=異常終了
      */
-    public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
-        String filename = WtUtils.formatValues(params[0], values);
-        if (params[0].contains("{{@SC_SEQ}}")) {
+    public boolean executeAction(ExecuteActionParameter params) {
+        WtWebDriver driver = params.driver;
+        String[] actionParams = params.actionParams;
+        Map<String, Object> values = params.values;
+
+        String filename = WtUtils.formatValues(actionParams[0], values);
+        if (actionParams[0].contains("{{@SC_SEQ}}")) {
             values.put("@SC_SEQ", ((Integer) values.get("@SC_SEQ")) + 1);
         }
 
         String path = values.containsKey("@SC_SAVEPATH") ? (String) values.get("@SC_SAVEPATH") : "";
-        if (1 < params.length && WtUtils.isNotBlank(params[1])) {
-            path = params[1];
+        if (1 < actionParams.length && WtUtils.isNotBlank(actionParams[1])) {
+            path = actionParams[1];
         }
 
         driver.saveScreenshotAsFile(path, filename);

@@ -22,27 +22,29 @@ public class WtActionSELECT implements WtAction {
 
     /**
      * アクション実行.
-     * @param driver WEBドライバ
-     * @param params アクションパラメータ
-     * @param values シナリオ内で取得した値を持ち運ぶためのマップ
+     * @param params アクション実行用パラメータ
      * @return true=正常終了/false=異常終了
      */
-    public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
-        ByType type = ByType.CSS;
-        if (WtUtils.isNotBlank(params[3])) {
-            type = ByType.valueOf(params[3].toUpperCase());
-        }
-        By by = type.getByInstance(WtUtils.formatValues(params[2], values));
+    public boolean executeAction(ExecuteActionParameter params) {
+        WtWebDriver driver = params.driver;
+        String[] actionParams = params.actionParams;
+        Map<String, Object> values = params.values;
 
-        switch (params[0]) {
+        ByType type = ByType.CSS;
+        if (WtUtils.isNotBlank(actionParams[3])) {
+            type = ByType.valueOf(actionParams[3].toUpperCase());
+        }
+        By by = type.getByInstance(WtUtils.formatValues(actionParams[2], values));
+
+        switch (actionParams[0]) {
         case "0":
-            driver.selectByIndex(by, Integer.parseInt(params[1]));
+            driver.selectByIndex(by, Integer.parseInt(actionParams[1]));
             break;
         case "1":
-            driver.selectByValue(by, params[1]);
+            driver.selectByValue(by, actionParams[1]);
             break;
         case "2":
-            driver.selectByVisibleText(by, params[1]);
+            driver.selectByVisibleText(by, actionParams[1]);
             break;
         }
         return true;

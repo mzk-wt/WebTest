@@ -20,17 +20,19 @@ public class WtActionCLICK implements WtAction {
 
     /**
      * アクション実行.
-     * @param driver WEBドライバ
-     * @param params アクションパラメータ
-     * @param values シナリオ内で取得した値を持ち運ぶためのマップ
+     * @param params アクション実行用パラメータ
      * @return true=正常終了/false=異常終了
      */
-    public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
+    public boolean executeAction(ExecuteActionParameter params) {
+        WtWebDriver driver = params.driver;
+        String[] actionParams = params.actionParams;
+        Map<String, Object> values = params.values;
+
         ByType type = ByType.CSS;
-        if (WtUtils.isNotBlank(params[1])) {
-            type = ByType.valueOf(params[1].toUpperCase());
+        if (WtUtils.isNotBlank(actionParams[1])) {
+            type = ByType.valueOf(actionParams[1].toUpperCase());
         }
-        By by = type.getByInstance(WtUtils.formatValues(params[0], values));
+        By by = type.getByInstance(WtUtils.formatValues(actionParams[0], values));
 
         driver.clickElement(by);
         return true;

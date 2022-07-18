@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import webtest.actions.ExecuteActionParameter;
 import webtest.actions.WtAction;
 import webtest.keys.ActionType;
 import webtest.keys.CsvKeys;
@@ -11,7 +12,7 @@ import webtest.keys.CsvKeys;
 /**
  * シナリオアクションクラス
  */
-public class WtTestScenatioAction {
+public class WtTestScenarioAction {
 
     /** アクション種別 */
     private ActionType actionType;
@@ -19,11 +20,14 @@ public class WtTestScenatioAction {
     /** アクションパラメータ */
     private String[] actionParams;
 
+    /** 子アクション */
+//    private List<WtTestScenarioAction> childActions = new ArrayList<>();
+
     /**
      * コンストラクタ.
      * @param params 初期化パラメータ
      */
-    public WtTestScenatioAction(Map<CsvKeys, String> params) {
+    public WtTestScenarioAction(Map<CsvKeys, String> params) {
         init(params);
     }
 
@@ -58,8 +62,9 @@ public class WtTestScenatioAction {
         try {
             Class<WtAction> c = (Class<WtAction>) Class.forName("webtest.actions.WtAction" + actionType.name());
             Object obj = c.getDeclaredConstructor().newInstance();
-            Method m = c.getDeclaredMethod("executeAction", WtWebDriver.class, String[].class, Map.class);
-            boolean result = (boolean) m.invoke(obj, driver, actionParams, values);
+            Method m = c.getDeclaredMethod("executeAction", ExecuteActionParameter.class);
+            ExecuteActionParameter params = new ExecuteActionParameter(driver, actionParams, values, this);
+            boolean result = (boolean) m.invoke(obj, params);
 
             if (!result) {
                 throw new RuntimeException("異常発生：" + actionType.name());
@@ -78,5 +83,9 @@ public class WtTestScenatioAction {
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
+    }
+
+    public ActionType getActionType() {
+        return this.actionType;
     }
 }

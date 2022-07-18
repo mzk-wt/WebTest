@@ -22,24 +22,26 @@ public class WtActionGETTEXT implements WtAction {
 
     /**
      * アクション実行.
-     * @param driver WEBドライバ
-     * @param params アクションパラメータ
-     * @param values シナリオ内で取得した値を持ち運ぶためのマップ
+     * @param params アクション実行用パラメータ
      * @return true=正常終了/false=異常終了
      */
-    public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
+    public boolean executeAction(ExecuteActionParameter params) {
+        WtWebDriver driver = params.driver;
+        String[] actionParams = params.actionParams;
+        Map<String, Object> values = params.values;
+
         ByType type = ByType.CSS;
-        if (WtUtils.isNotBlank(params[2])) {
-            type = ByType.valueOf(params[2].toUpperCase());
+        if (WtUtils.isNotBlank(actionParams[2])) {
+            type = ByType.valueOf(actionParams[2].toUpperCase());
         }
-        By by = type.getByInstance(WtUtils.formatValues(params[1], values));
+        By by = type.getByInstance(WtUtils.formatValues(actionParams[1], values));
 
         int elemNo = 0;
-        if (WtUtils.isNotBlank(params[3])) {
-            elemNo = Integer.parseInt(params[3]);
+        if (WtUtils.isNotBlank(actionParams[3])) {
+            elemNo = Integer.parseInt(actionParams[3]);
         }
 
-        values.put(params[0], driver.getText(by, elemNo));
+        values.put(actionParams[0], driver.getText(by, elemNo));
         return true;
     }
 }
