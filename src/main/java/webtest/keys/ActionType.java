@@ -59,5 +59,36 @@ public enum ActionType {
     // 変数に値をセットする
     SETVAL,
     // ログ出力
-    LOG
+    LOG,
+
+    /*****************************************************************
+     * シナリオ制御アクション
+     *****************************************************************/
+    // 繰り返し処理
+    FOR,
+    ENDFOR;
+
+    /**
+     * 子アクション開始タグかどうか
+     * @return
+     */
+    public boolean startChildAction() {
+        if (this.equals(FOR)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 子アクション終了タグかどうか
+     * @return
+     */
+    public boolean endChildAction() {
+        if (this.equals(ENDFOR)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

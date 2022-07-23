@@ -19,13 +19,13 @@ import webtest.keys.InputKeys;
 public class WtTestScenario {
 
     /** シナリオ内で実行するアクションリスト */
-    private List<WtTestScenatioAction> actions = new ArrayList<>();
+    private List<WtTestScenarioAction> actions = new ArrayList<>();
 
     /** 現在実行中のアクション番号 */
     private int currentActionNo = -1;
 
     /** 現在実行中のアクション */
-    private WtTestScenatioAction currentAction;
+    private WtTestScenarioAction currentAction;
 
     /** シナリオ内で取得した値を持ち運ぶためのマップ  */
     private Map<String, Object> scenarioValues = new HashMap<>();
@@ -46,12 +46,14 @@ public class WtTestScenario {
         // 共通変数の準備
         prepareCommonScenarioValues();
 
-        // CSVファイルを1行ずつ読込んでシナリオアクションを初期化する
+        // CSVファイルを1行ずつ読込んでシナリオアクションを登録する
         BufferedReader br = null;
         try {
             try {
                 String fileName = params.get(InputKeys.SCENARIO_FILE);
                 br = new BufferedReader(new FileReader(new File(fileName)));
+
+                List<WtTestScenarioAction> registActions = actions;
 
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -60,16 +62,15 @@ public class WtTestScenario {
                     }
 
                     String[] data = Arrays.copyOf(line.split(","), 6);
+                    WtTestScenarioAction action = createAction(data);
+                    registActions.add(action);
 
-                    Map<CsvKeys, String> actionParams = new HashMap<>();
-                    actionParams.put(CsvKeys.ACT_TYPE, data[0]);
-                    actionParams.put(CsvKeys.ACT_PARAM_1, data[1]);
-                    actionParams.put(CsvKeys.ACT_PARAM_2, data[2]);
-                    actionParams.put(CsvKeys.ACT_PARAM_3, data[3]);
-                    actionParams.put(CsvKeys.ACT_PARAM_4, data[4]);
-                    actionParams.put(CsvKeys.ACT_PARAM_5, data[5]);
-
-                    actions.add(new WtTestScenatioAction(actionParams));
+                    // 子アクションの登録開始／終了
+                    if (action.getActionType().startChildAction()) {
+                        registActions = action.getChildActions();
+                    } else if (action.getActionType().endChildAction()) {
+                        registActions = actions;
+                    }
                 }
 
             } finally {
@@ -79,6 +80,23 @@ public class WtTestScenario {
         } catch (IOException e) {
             throw new RuntimeException("CSVファイル読込み失敗", e);
         }
+    }
+
+    /**
+     * シナリオアクションを作成します.
+     * @param data シナリオデータ１行分
+     * @return シナリオアクション
+     */
+    private WtTestScenarioAction createAction(String[] data) {
+        Map<CsvKeys, String> actionParams = new HashMap<>();
+        actionParams.put(CsvKeys.ACT_TYPE, data[0]);
+        actionParams.put(CsvKeys.ACT_PARAM_1, data[1]);
+        actionParams.put(CsvKeys.ACT_PARAM_2, data[2]);
+        actionParams.put(CsvKeys.ACT_PARAM_3, data[3]);
+        actionParams.put(CsvKeys.ACT_PARAM_4, data[4]);
+        actionParams.put(CsvKeys.ACT_PARAM_5, data[5]);
+
+        return new WtTestScenarioAction(actionParams);
     }
 
     /**
@@ -105,7 +123,7 @@ public class WtTestScenario {
      * 次のアクションを返します.
      * @return アクション（次が存在しない場合はnull）
      */
-    private WtTestScenatioAction getNextAction() {
+    private WtTestScenarioAction getNextAction() {
         currentActionNo++;
         if (getActionCount() <= currentActionNo) {
             return null;

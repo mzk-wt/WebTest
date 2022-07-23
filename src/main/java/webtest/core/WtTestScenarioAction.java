@@ -2,6 +2,8 @@ package webtest.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import webtest.actions.ExecuteActionParameter;
@@ -21,7 +23,7 @@ public class WtTestScenarioAction {
     private String[] actionParams;
 
     /** 子アクション */
-//    private List<WtTestScenarioAction> childActions = new ArrayList<>();
+    private List<WtTestScenarioAction> childActions = new ArrayList<>();
 
     /**
      * コンストラクタ.
@@ -55,7 +57,7 @@ public class WtTestScenarioAction {
      */
     @SuppressWarnings("unchecked")
     public void execute(WtWebDriver driver, Map<String, Object> values) {
-        if (actionType.equals(ActionType.NONE)) {
+        if (actionType.equals(ActionType.NONE) || actionType.equals(ActionType.ENDFOR)) {
             return;
         }
 
@@ -87,5 +89,9 @@ public class WtTestScenarioAction {
 
     public ActionType getActionType() {
         return this.actionType;
+    }
+
+    public List<WtTestScenarioAction> getChildActions() {
+        return this.childActions;
     }
 }
