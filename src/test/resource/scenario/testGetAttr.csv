@@ -1,0 +1,16 @@
+NONE,PAGE1を開いてタイトル取得
+OPEN,file://{{@ROOT_PATH}}/src/test/resource/samplepage/page1.html
+GETTITLE,TITLE
+LOG,OPEN:{{TITLE}}
+
+NONE,IDで要素を指定してIDの値を取得
+GETATTR,ATTR,id,attr1,ID
+LOG,{{ATTR}}
+
+NONE,IDで要素を指定してCLASSの値を取得
+GETATTR,ATTR,class,attr1,ID
+LOG,{{ATTR}}
+
+NONE,IDで要素を指定してdata-testの値を取得
+GETATTR,ATTR,data-test,attr1,ID
+LOG,{{ATTR}}

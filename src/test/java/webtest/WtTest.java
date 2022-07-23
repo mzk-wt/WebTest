@@ -81,4 +81,14 @@ public abstract class WtTest {
                 + "text(name2-2)\n");
     }
 
+    @Test
+    @DisplayName("属性取得確認")
+    void testGetAttr() {
+        String out = doTest("testGetAttr.csv");
+        assertEquals(out,
+                  "OPEN:WebTest(page1)\n"
+                + "attr1\n"
+                + "c1 c2\n"
+                + "data1\n");
+    }
 }
