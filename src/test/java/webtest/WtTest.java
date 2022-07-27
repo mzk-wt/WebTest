@@ -3,31 +3,45 @@ package webtest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import webtest.core.WtUtils;
 import webtest.keys.InputKeys;
 
 public abstract class WtTest {
 
     protected static final String ROOT_PATH = System.getProperty("user.dir");
 
-    protected static final String OUTPUT_ROOT_PATH = ROOT_PATH + "/out/";
+    protected static final String OUTPUT_ROOT_PATH = ROOT_PATH + "/src/test/out/";
 
     protected static final String SCENARIO_ROOT_PATH = ROOT_PATH + "/src/test/resource/scenario/";
+
+    protected ByteArrayOutputStream bos;
 
     protected abstract Map<InputKeys, String> getTestParams(String scenarioCsv);
 
     protected String doTest(String scenarioFile) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        setOut();
+        new WebTest().start(getTestParams(scenarioFile));
+        return getOut();
+    }
+
+    protected void setOut() {
+        bos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(bos);
         System.setOut(ps);
+    }
 
-        new WebTest().start(getTestParams(scenarioFile));
-
+    protected String getOut() {
         return bos.toString();
     }
 
@@ -90,5 +104,40 @@ public abstract class WtTest {
                 + "attr1\n"
                 + "c1 c2\n"
                 + "data1\n");
+    }
+
+    @Test
+    @DisplayName("画面キャプチャ取得確認")
+    void testSaveCapture() {
+        // 出力先フォルダを削除する
+        Map<InputKeys, String> params = getTestParams("testSaveCapture.csv");
+        Path outPath = Paths.get(params.get(InputKeys.OUTPUT_PATH));
+        try {
+            WtUtils.deleteFiles(outPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // テスト実行
+        doTest("testSaveCapture.csv");
+
+        // 出力されたファイル一覧を取得して検証
+        try (Stream<Path> stream = Files.walk(outPath)) {
+            stream.forEach(p -> System.out.println(p.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(getOut(),
+                    ROOT_PATH + "/src/test/out/chrometest\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/outsub1\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_3.png\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_2.png\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_1.png\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/outsub2\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/outsub2/CAPTURE_2.png\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/outsub2/CAPTURE_1.png\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/CAPTURE_2.png\n"
+                  + ROOT_PATH + "/src/test/out/chrometest/CAPTURE_1.png\n");
     }
 }

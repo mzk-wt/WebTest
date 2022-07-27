@@ -1,5 +1,9 @@
 package webtest.core;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,10 +47,40 @@ public class WtUtils {
             String key = m.group(1).trim();
             if (isNotBlank(key) && values.containsKey(key)) {
                 String regex = Pattern.quote(m.group(0));
-                text = text.replaceAll(regex, (String) values.get(key));
+                text = text.replaceAll(regex, String.valueOf(values.get(key)));
             }
         }
 
         return text;
+    }
+
+    /**
+     * ファイルを削除.(サブディレクトリが存在する場合、まとめて削除する)
+     * @param path ファイルパス
+     * @throws IOException
+     */
+    public static void deleteFiles(Path path) throws IOException {
+        // サブディレクトリも削除
+        if (Files.exists(path)) {
+
+            //ファイル存在チェック
+            if (!Files.isDirectory(path)) {
+                //存在したら削除する
+                Files.delete(path);
+
+            //対象がディレクトリの場合
+            } else {
+                //ディレクトリ内の一覧を取得
+                File[] files = path.toFile().listFiles();
+
+                //存在するファイル数分ループして再帰的に削除
+                for (int i = 0; i < files.length; i++) {
+                    deleteFiles(files[i].toPath());
+                }
+
+                //ディレクトリを削除する
+                Files.delete(path);
+            }
+        }
     }
 }

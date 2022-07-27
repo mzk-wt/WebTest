@@ -275,10 +275,17 @@ public class WtWebDriver {
      * @return true=成功／false=失敗
      */
     public boolean saveScreenshotAsFile(String path, String filename) {
+        // 出力先フォルダが存在しない場合、作成する
+        Path out = Paths.get(path);
+        if (Files.notExists(out)) {
+            out.toFile().mkdirs();
+        }
+
         File f = getScreenshotAsFile();
 
         Path srcPath = Paths.get(f.getAbsolutePath());
         Path dstPath = Paths.get(path + File.separator + filename);
+
         try {
             Files.copy(srcPath, dstPath);
         } catch (IOException e) {

@@ -27,12 +27,12 @@ public class WtActionSAVECAPTURE implements WtAction {
 
         String filename = WtUtils.formatValues(actionParams[0], values);
         if (actionParams[0].contains("{{@SC_SEQ}}")) {
-            values.put("@SC_SEQ", ((Integer) values.get("@SC_SEQ")) + 1);
+            values.put("@SC_SEQ", Integer.parseInt(String.valueOf(values.get("@SC_SEQ"))) + 1);
         }
 
         String path = values.containsKey("@SC_SAVEPATH") ? (String) values.get("@SC_SAVEPATH") : "";
-        if (1 < actionParams.length && WtUtils.isNotBlank(actionParams[1])) {
-            path = actionParams[1];
+        if (WtUtils.isNotBlank(actionParams[1])) {
+            path = WtUtils.formatValues(actionParams[1], values);
         }
 
         driver.saveScreenshotAsFile(path, filename);

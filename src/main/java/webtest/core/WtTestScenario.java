@@ -44,7 +44,7 @@ public class WtTestScenario {
      */
     private void init(Map<InputKeys, String> params) {
         // 共通変数の準備
-        prepareCommonScenarioValues();
+        prepareCommonScenarioValues(params);
 
         // CSVファイルを1行ずつ読込んでシナリオアクションを登録する
         BufferedReader br = null;
@@ -102,11 +102,12 @@ public class WtTestScenario {
     /**
      * 共通変数を準備します.
      */
-    private void prepareCommonScenarioValues() {
+    private void prepareCommonScenarioValues(Map<InputKeys, String> params) {
         // カレントディレクトリ
         scenarioValues.put("@ROOT_PATH", System.getProperty("user.dir"));
         // スクリーンショット保存先
-        scenarioValues.put("@SC_SAVEPATH", System.getProperty("user.dir") + "/../");
+        scenarioValues.put("@OUTPUT_PATH", params.get(InputKeys.OUTPUT_PATH));
+        scenarioValues.put("@SC_SAVEPATH", params.get(InputKeys.OUTPUT_PATH));
         // スクリーンショットファイル連番
         scenarioValues.put("@SC_SEQ", 1);
     }
