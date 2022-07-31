@@ -50,6 +50,8 @@ public enum ActionType {
     CLICK,
     // スクロール
     SCROLL,
+    // スクリプト実行
+    EXECSCRIPT,
 
     /*****************************************************************
      * Selenium以外の操作

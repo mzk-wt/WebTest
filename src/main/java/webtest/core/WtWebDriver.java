@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -438,6 +439,16 @@ public class WtWebDriver {
         Actions actions = new Actions(driver);
         actions.moveToElement(elem.get(elemNo));
         actions.perform();
+    }
+
+    /**
+     * Javascriptを実行します.
+     * @param script 実行するスクリプト
+     * @param args パラメータ
+     */
+    public void execScript(String script, Object... args) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript(script, args);
     }
 
     /*****************************************************************
