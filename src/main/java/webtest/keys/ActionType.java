@@ -24,6 +24,8 @@ public enum ActionType {
     CLOSE,
     // ウィンドウサイズを変更
     WINSIZE,
+    // スクロール
+    SCROLL,
 
     /*****************************************************************
      * 取得系の処理
@@ -48,8 +50,6 @@ public enum ActionType {
     SELECT,
     // クリック
     CLICK,
-    // スクロール
-    SCROLL,
     // スクリプト実行
     EXECSCRIPT,
 

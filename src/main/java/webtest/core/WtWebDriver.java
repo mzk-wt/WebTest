@@ -154,6 +154,40 @@ public class WtWebDriver {
         driver.manage().window().setSize(size);
     }
 
+    /**
+     * スクロールします.
+     * @param xOffset 横方向の移動量
+     * @param yOffset 縦方向の移動量
+     */
+    public void scroll(int xOffset, int yOffset) {
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(xOffset, yOffset);
+        actions.perform();
+    }
+
+    /**
+     * 指定された要素までスクロールします.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     */
+    public void scrollToElement(By by) {
+        WebElement elem = findElement(by);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(elem);
+        actions.perform();
+    }
+
+    /**
+     * 指定された要素までスクロールします.
+     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
+     * @param elemNo 要素番号
+     */
+    public void scrollToElement(By by, int elemNo) {
+        List<WebElement> elem = findElements(by);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(elem.get(elemNo));
+        actions.perform();
+    }
+
     /*****************************************************************
      * 取得系の処理
      *****************************************************************/
@@ -405,40 +439,6 @@ public class WtWebDriver {
      */
     public void clickElement(By by, int elemNo) {
         findElements(by).get(elemNo).click();
-    }
-
-    /**
-     * スクロールします.
-     * @param xOffset 横方向の移動量
-     * @param yOffset 縦方向の移動量
-     */
-    public void scroll(int xOffset, int yOffset) {
-        Actions actions = new Actions(driver);
-        actions.moveByOffset(xOffset, yOffset);
-        actions.perform();
-    }
-
-    /**
-     * 指定された要素までスクロールします.
-     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
-     */
-    public void scrollToElement(By by) {
-        WebElement elem = findElement(by);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(elem);
-        actions.perform();
-    }
-
-    /**
-     * 指定された要素までスクロールします.
-     * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
-     * @param elemNo 要素番号
-     */
-    public void scrollToElement(By by, int elemNo) {
-        List<WebElement> elem = findElements(by);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(elem.get(elemNo));
-        actions.perform();
     }
 
     /**
