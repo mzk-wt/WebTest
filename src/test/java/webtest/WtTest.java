@@ -129,15 +129,48 @@ public abstract class WtTest {
         }
 
         assertEquals(getOut(),
-                    ROOT_PATH + "/src/test/out/chrometest\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/outsub1\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_3.png\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_2.png\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_1.png\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/outsub2\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/outsub2/CAPTURE_2.png\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/outsub2/CAPTURE_1.png\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/CAPTURE_2.png\n"
-                  + ROOT_PATH + "/src/test/out/chrometest/CAPTURE_1.png\n");
+                  ROOT_PATH + "/src/test/out/chrometest\n"
+                + ROOT_PATH + "/src/test/out/chrometest/outsub1\n"
+                + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_3.png\n"
+                + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_2.png\n"
+                + ROOT_PATH + "/src/test/out/chrometest/outsub1/CAPTURE_1.png\n"
+                + ROOT_PATH + "/src/test/out/chrometest/outsub2\n"
+                + ROOT_PATH + "/src/test/out/chrometest/outsub2/CAPTURE_2.png\n"
+                + ROOT_PATH + "/src/test/out/chrometest/outsub2/CAPTURE_1.png\n"
+                + ROOT_PATH + "/src/test/out/chrometest/CAPTURE_2.png\n"
+                + ROOT_PATH + "/src/test/out/chrometest/CAPTURE_1.png\n");
+    }
+
+    @Test
+    @DisplayName("入力確認")
+    void testInputValues() {
+        String out = doTest("testInputValues.csv");
+        assertEquals(out,
+                  "abc123!\"#あいう\n"
+                + "2022-01\n"
+                + "2022-01-01\n"
+                + "2022-01-01T12:30\n"
+                + "12:30\n"
+                + "2022-W20\n"
+                + "https://www.google.com/\n"
+                + "test.0123-4567@xxx.yyy\n"
+                + "090-1234-5678\n"
+                + "9876543210\n"
+                + "password\n"
+                + "search\n"
+                + "true\n"
+                + "null\n"
+                + "true;null\n"
+                + "null;true\n"
+                + "25\n"
+                + "#fc23e5\n"
+                + "C:fakepathuploadfile1.txt\n"
+                + "click button!\n"
+                + "click image button!\n"
+                + "click submit button!\n"
+                + "hidden\n"
+                + "1\n"
+                + "2\n"
+                + "3\n");
     }
 }
