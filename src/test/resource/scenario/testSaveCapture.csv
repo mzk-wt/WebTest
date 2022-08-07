@@ -14,8 +14,14 @@ SETVAL,@SC_SAVEPATH,{{@OUTPUT_PATH}}/outsub1
 NONE,連番をリセット
 SETVAL,@SC_SEQ,1
 
+NONE,スクロール（移動量指定）
+SCROLL,0,0,300
+
 NONE,画面キャプチャを取得（登録した保存先）連番１
 SAVECAPTURE,CAPTURE_{{@SC_SEQ}}.png
+
+NONE,スクロール（移動量指定）
+SCROLL,0,0,-100
 
 NONE,画面キャプチャを取得（登録した保存先）連番２
 SAVECAPTURE,CAPTURE_{{@SC_SEQ}}.png
@@ -26,6 +32,9 @@ SETVAL,@SC_SEQ,1
 
 NONE,画面キャプチャを取得（指定した保存先）連番１
 SAVECAPTURE,CAPTURE_{{@SC_SEQ}}.png,{{@OUTPUT_PATH}}/outsub2
+
+NONE,スクロール（指定要素）
+SCROLL,1,0,0,select1,ID
 
 NONE,画面キャプチャを取得（指定した保存先）連番２
 SAVECAPTURE,CAPTURE_{{@SC_SEQ}}.png,{{@OUTPUT_PATH}}/outsub2
