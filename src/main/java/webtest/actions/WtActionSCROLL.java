@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 
+import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
 import webtest.keys.ByType;
 
@@ -12,6 +13,7 @@ import webtest.keys.ByType;
  * <pre>
  * (アクションパラメータ)
  * [0]:スクロール方法（0:指定した移動量だけ移動, 1:指定した要素まで移動）
+ *     ※TODO:0を指定した場合にスクロールが動かない！！
  * [1]:横方向の移動量（スクロール方法＝0の場合）
  * [2]:縦方向の移動量（スクロール方法＝0の場合）
  * [3]:要素を特定するための検索文字列（スクロール方法＝1の場合）
@@ -22,22 +24,24 @@ public class WtActionSCROLL implements WtAction {
 
     /**
      * アクション実行.
-     * @param driver WEBドライバ
-     * @param params アクションパラメータ
-     * @param values シナリオ内で取得した値を持ち運ぶためのマップ
+     * @param params アクション実行用パラメータ
      * @return true=正常終了/false=異常終了
      */
-    public boolean executeAction(WtWebDriver driver, String[] params, Map<String, Object> values) {
-        if ("0".equals(params[0])) {
-            driver.scroll(Integer.parseInt(params[1]), Integer.parseInt(params[2]));
+    public boolean executeAction(ExecuteActionParameter params) {
+        WtWebDriver driver = params.driver;
+        String[] actionParams = params.actionParams;
+        Map<String, Object> values = params.values;
+
+        if ("0".equals(actionParams[0])) {
+            driver.scroll(Integer.parseInt(actionParams[1]), Integer.parseInt(actionParams[2]));
             return true;
 
-        } else if ("1".equals(params[1])) {
+        } else if ("1".equals(actionParams[0])) {
             ByType type = ByType.CSS;
-            if (4 < params.length) {
-                type = ByType.valueOf(params[4].toUpperCase());
+            if (WtUtils.isNotBlank(actionParams[4])) {
+                type = ByType.valueOf(actionParams[4].toUpperCase());
             }
-            By by = type.getByInstance(params[3]);
+            By by = type.getByInstance(WtUtils.formatValues(actionParams[3], values));
             driver.scrollToElement(by);
             return true;
         }
