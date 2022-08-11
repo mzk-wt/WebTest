@@ -2,11 +2,10 @@ package webtest.actions;
 
 import java.util.Map;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
-import webtest.keys.ByType;
 
 /**
  * キー入力アクション（SENDKEY）
@@ -29,13 +28,9 @@ public class WtActionSENDKEY implements WtAction {
         String[] actionParams = params.actionParams;
         Map<String, Object> values = params.values;
 
-        ByType type = ByType.CSS;
-        if (WtUtils.isNotBlank(actionParams[2])) {
-            type = ByType.valueOf(actionParams[2].toUpperCase());
-        }
-        By by = type.getByInstance(WtUtils.formatValues(actionParams[1], values));
+        WebElement elem = WtUtils.getWebElement(driver, values, actionParams[2], actionParams[1]);
+        driver.sendKeys(elem, WtUtils.formatValues(actionParams[0], values));
 
-        driver.sendKeys(by, WtUtils.formatValues(actionParams[0], values));
         return true;
     }
 }

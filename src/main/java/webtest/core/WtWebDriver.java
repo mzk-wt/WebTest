@@ -171,9 +171,7 @@ public class WtWebDriver {
      */
     public void scrollToElement(By by) {
         WebElement elem = findElement(by);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(elem);
-        actions.perform();
+        scrollToElement(elem);
     }
 
     /**
@@ -183,8 +181,16 @@ public class WtWebDriver {
      */
     public void scrollToElement(By by, int elemNo) {
         List<WebElement> elem = findElements(by);
+        scrollToElement(elem.get(elemNo));
+    }
+
+    /**
+     * 指定された要素までスクロールします.
+     * @param elem 要素
+     */
+    public void scrollToElement(WebElement elem) {
         Actions actions = new Actions(driver);
-        actions.moveToElement(elem.get(elemNo));
+        actions.moveToElement(elem);
         actions.perform();
     }
 
@@ -251,7 +257,7 @@ public class WtWebDriver {
      */
     public String getText(By by) {
         WebElement elem = findElement(by);
-        return elem.getText();
+        return getText(elem);
     }
 
     /**
@@ -262,7 +268,16 @@ public class WtWebDriver {
      */
     public String getText(By by, int elemNo) {
         List<WebElement> elem = findElements(by);
-        return elem.get(elemNo).getText();
+        return getText(elem.get(elemNo));
+    }
+
+    /**
+     * テキストを取得します.
+     * @param elem 要素
+     * @return テキストの値
+     */
+    public String getText(WebElement elem) {
+        return elem.getText();
     }
 
     /**
@@ -273,7 +288,7 @@ public class WtWebDriver {
      */
     public String getAttribute(By by, String attr) {
         WebElement elem = findElement(by);
-        return elem.getAttribute(attr);
+        return getAttribute(elem, attr);
     }
 
     /**
@@ -285,7 +300,17 @@ public class WtWebDriver {
      */
     public String getAttribute(By by, String attr, int elemNo) {
         List<WebElement> elem = findElements(by);
-        return elem.get(elemNo).getAttribute(attr);
+        return getAttribute(elem.get(elemNo), attr);
+    }
+
+    /**
+     * 属性を取得します.
+     * @param elem 要素
+     * @param attr 属性
+     * @return 属性の値
+     */
+    public String getAttribute(WebElement elem, String attr) {
+        return elem.getAttribute(attr);
     }
 
     /**
@@ -341,7 +366,7 @@ public class WtWebDriver {
      */
     public void sendKeys(By by, String keys) {
         WebElement elem = findElement(by);
-        elem.sendKeys(keys);
+        sendKeys(elem, keys);
     }
 
     /**
@@ -352,7 +377,16 @@ public class WtWebDriver {
      */
     public void sendKeys(By by, String keys, int elemNo) {
         List<WebElement> elem = findElements(by);
-        elem.get(elemNo).sendKeys(keys);
+        sendKeys(elem.get(elemNo), keys);
+    }
+
+    /**
+     * キーボードから入力を行います.
+     * @param elem 要素
+     * @param keys 入力する値
+     */
+    public void sendKeys(WebElement elem, String keys) {
+        elem.sendKeys(keys);
     }
 
     /**
@@ -362,8 +396,7 @@ public class WtWebDriver {
      */
     public void selectByIndex(By by, int index) {
         WebElement elem = findElement(by);
-        Select select = new Select(elem);
-        select.selectByIndex(index);
+        selectByIndex(elem, index);
     }
 
     /**
@@ -374,7 +407,16 @@ public class WtWebDriver {
      */
     public void selectByIndex(By by, int index, int elemNo) {
         List<WebElement> elem = findElements(by);
-        Select select = new Select(elem.get(elemNo));
+        selectByIndex(elem.get(elemNo), index);
+    }
+
+    /**
+     * 順番を指定してドロップダウンを選択します.
+     * @param elem 要素
+     * @param index 順番
+     */
+    public void selectByIndex(WebElement elem, int index) {
+        Select select = new Select(elem);
         select.selectByIndex(index);
     }
 
@@ -385,8 +427,7 @@ public class WtWebDriver {
      */
     public void selectByValue(By by, String value) {
         WebElement elem = findElement(by);
-        Select select = new Select(elem);
-        select.selectByValue(value);
+        selectByValue(elem, value);
     }
 
     /**
@@ -397,7 +438,16 @@ public class WtWebDriver {
      */
     public void selectByValue(By by, String value, int elemNo) {
         List<WebElement> elem = findElements(by);
-        Select select = new Select(elem.get(elemNo));
+        selectByValue(elem.get(elemNo), value);
+    }
+
+    /**
+     * value属性の値を指定してドロップダウンを選択します.
+     * @param elem 要素
+     * @param value value属性の値
+     */
+    public void selectByValue(WebElement elem, String value) {
+        Select select = new Select(elem);
         select.selectByValue(value);
     }
 
@@ -408,8 +458,7 @@ public class WtWebDriver {
      */
     public void selectByVisibleText(By by, String text) {
         WebElement elem = findElement(by);
-        Select select = new Select(elem);
-        select.selectByVisibleText(text);
+        selectByVisibleText(elem, text);
     }
 
     /**
@@ -420,7 +469,16 @@ public class WtWebDriver {
      */
     public void selectByVisibleText(By by, String text, int elemNo) {
         List<WebElement> elem = findElements(by);
-        Select select = new Select(elem.get(elemNo));
+        selectByVisibleText(elem.get(elemNo), text);
+    }
+
+    /**
+     * 表示テキストを指定してドロップダウンを選択します.
+     * @param elem 要素
+     * @param text 表示テキスト
+     */
+    public void selectByVisibleText(WebElement elem, String text) {
+        Select select = new Select(elem);
         select.selectByVisibleText(text);
     }
 
@@ -442,6 +500,14 @@ public class WtWebDriver {
     }
 
     /**
+     * 要素をクリックします.
+     * @param elem 要素
+     */
+    public void clickElement(WebElement elem) {
+        elem.click();
+    }
+
+    /**
      * Javascriptを実行します.
      * @param script 実行するスクリプト
      * @param args パラメータ
@@ -459,9 +525,9 @@ public class WtWebDriver {
      * @param by 要素を特定するByクラスのインスタンス(@see {@link WtWebDriver#findElement(By)})
      * @return true=表示／false=非表示
      */
-    public boolean isDisplaye(By by) {
+    public boolean isDisplayed(By by) {
         WebElement elem = findElement(by);
-        return elem.isDisplayed();
+        return isDisplayed(elem);
     }
 
     /**
@@ -470,9 +536,18 @@ public class WtWebDriver {
      * @param elemNo 要素番号
      * @return true=表示／false=非表示
      */
-    public boolean isDisplaye(By by, int elemNo) {
+    public boolean isDisplayed(By by, int elemNo) {
         List<WebElement> elem = findElements(by);
-        return elem.get(elemNo).isDisplayed();
+        return isDisplayed(elem.get(elemNo));
+    }
+
+    /**
+     * 要素が表示されているかどうかを判定します.
+     * @param elem 要素
+     * @return true=表示／false=非表示
+     */
+    public boolean isDisplayed(WebElement elem) {
+        return elem.isDisplayed();
     }
 
     /**
@@ -482,7 +557,7 @@ public class WtWebDriver {
      */
     public boolean isEnabled(By by) {
         WebElement elem = findElement(by);
-        return elem.isEnabled();
+        return isEnabled(elem);
     }
 
     /**
@@ -493,7 +568,16 @@ public class WtWebDriver {
      */
     public boolean isEnabled(By by, int elemNo) {
         List<WebElement> elem = findElements(by);
-        return elem.get(elemNo).isEnabled();
+        return isEnabled(elem.get(elemNo));
+    }
+
+    /**
+     * 要素が有効かどうかを判定します.
+     * @param elem 要素
+     * @return true=有効／false=無効
+     */
+    public boolean isEnabled(WebElement elem) {
+        return elem.isEnabled();
     }
 
     /**
@@ -503,7 +587,7 @@ public class WtWebDriver {
      */
     public boolean isSelected(By by) {
         WebElement elem = findElement(by);
-        return elem.isSelected();
+        return isSelected(elem);
     }
 
     /**
@@ -514,7 +598,15 @@ public class WtWebDriver {
      */
     public boolean isSelected(By by, int elemNo) {
         List<WebElement> elem = findElements(by);
-        return elem.get(elemNo).isSelected();
+        return isSelected(elem.get(elemNo));
     }
 
+    /**
+     * 要素が選択されているかどうかを判定します.
+     * @param elem 要素
+     * @return true=選択されている／false=選択されていない
+     */
+    public boolean isSelected(WebElement elem) {
+        return elem.isSelected();
+    }
 }

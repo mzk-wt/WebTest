@@ -3,13 +3,11 @@ package webtest.actions;
 import java.util.List;
 import java.util.Map;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import webtest.core.WtTestScenarioAction;
 import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
-import webtest.keys.ByType;
 
 /**
  * 繰り返し処理アクション（FOR）
@@ -37,6 +35,7 @@ public class WtActionFOR implements WtAction {
         String id = actionParams[0];
         String count = actionParams[1];
         String byQuery = actionParams[2];
+        String byType = actionParams[3];
 
         // 指定された回数繰り返し処理
         if (WtUtils.isNotBlank(count)) {
@@ -51,13 +50,7 @@ public class WtActionFOR implements WtAction {
 
         // 指定された要素の数だけ繰り返し処理
         } else if (WtUtils.isNotBlank(byQuery)) {
-            ByType type = ByType.CSS;
-            if (WtUtils.isNotBlank(actionParams[3])) {
-                type = ByType.valueOf(actionParams[3].toUpperCase());
-            }
-            By by = type.getByInstance(WtUtils.formatValues(byQuery, values));
-
-            List<WebElement> elements = driver.findElements(by);
+            List<WebElement> elements = WtUtils.getWebElements(driver, values, byType, byQuery);
             for (int i = 0; i < elements.size(); i++) {
                 values.put(id + "@IDX", i);
                 values.put(id + "@ELEM", elements.get(i));

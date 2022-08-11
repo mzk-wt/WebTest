@@ -2,11 +2,10 @@ package webtest.actions;
 
 import java.util.Map;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
-import webtest.keys.ByType;
 
 /**
  * 属性取得アクション（GETATTR）
@@ -30,13 +29,9 @@ public class WtActionGETATTR implements WtAction {
         String[] actionParams = params.actionParams;
         Map<String, Object> values = params.values;
 
-        ByType type = ByType.CSS;
-        if (WtUtils.isNotBlank(actionParams[3])) {
-            type = ByType.valueOf(actionParams[3].toUpperCase());
-        }
-        By by = type.getByInstance(WtUtils.formatValues(actionParams[2], values));
+        WebElement elem = WtUtils.getWebElement(driver, values, actionParams[3], actionParams[2]);
+        values.put(actionParams[0], driver.getAttribute(elem, actionParams[1]));
 
-        values.put(actionParams[0], driver.getAttribute(by, actionParams[1]));
         return true;
     }
 }

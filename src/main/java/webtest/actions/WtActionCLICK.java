@@ -2,11 +2,10 @@ package webtest.actions;
 
 import java.util.Map;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
-import webtest.keys.ByType;
 
 /**
  * ドロップダウン選択アクション（SELECT）
@@ -28,13 +27,9 @@ public class WtActionCLICK implements WtAction {
         String[] actionParams = params.actionParams;
         Map<String, Object> values = params.values;
 
-        ByType type = ByType.CSS;
-        if (WtUtils.isNotBlank(actionParams[1])) {
-            type = ByType.valueOf(actionParams[1].toUpperCase());
-        }
-        By by = type.getByInstance(WtUtils.formatValues(actionParams[0], values));
+        WebElement elem = WtUtils.getWebElement(driver, values, actionParams[1], actionParams[0]);
+        driver.clickElement(elem);
 
-        driver.clickElement(by);
         return true;
     }
 }

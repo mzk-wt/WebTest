@@ -2,11 +2,10 @@ package webtest.actions;
 
 import java.util.Map;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
-import webtest.keys.ByType;
 
 /**
  * スクロールアクション（SCROLL）
@@ -37,12 +36,8 @@ public class WtActionSCROLL implements WtAction {
             return true;
 
         } else if ("1".equals(actionParams[0])) {
-            ByType type = ByType.CSS;
-            if (WtUtils.isNotBlank(actionParams[4])) {
-                type = ByType.valueOf(actionParams[4].toUpperCase());
-            }
-            By by = type.getByInstance(WtUtils.formatValues(actionParams[3], values));
-            driver.scrollToElement(by);
+            WebElement elem = WtUtils.getWebElement(driver, values, actionParams[4], actionParams[3]);
+            driver.scrollToElement(elem);
             return true;
         }
 
