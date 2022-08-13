@@ -325,7 +325,7 @@ public class WtWebDriver {
         File f = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             // ファイルが保存されるのを待機
-            Thread.sleep(10000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
