@@ -173,4 +173,19 @@ public abstract class WtTest {
                 + "2\n"
                 + "3\n");
     }
+
+    @Test
+    @DisplayName("繰り返し処理確認")
+    void testForLoop() {
+        String out = doTest("testForLoop.csv");
+        assertEquals(out,
+                  "text(name1)\n"
+                + "text(name2-1)\n"
+                + "text(name3)\n"
+                + "text(name2-1)\ntext(name2-1)\n"
+                + "text(name2-2)\ntext(name2-2)\n"
+                + "text(name2-3)\ntext(name2-3)\n"
+                + "0:text(classname)\n0:text(id1)\n0:text(name1)\n0:text(name2-1)\n0:text(name2-2)\n0:text(name2-3)\n0:text(name3)\n0:text(linktext)\n"
+                + "1:text(classname)\n1:text(id1)\n1:text(name1)\n1:text(name2-1)\n1:text(name2-2)\n1:text(name2-3)\n1:text(name3)\n1:text(linktext)\n");
+    }
 }

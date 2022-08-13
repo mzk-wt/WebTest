@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -38,6 +39,25 @@ public class WtUtils {
      */
     public static boolean isNotBlank(String value) {
         return !isBlank(value);
+    }
+
+    /**
+     * オプション文字列を解析してマップに格納
+     * @param optionString オプション文字列
+     *                     key=value[;key=value[;...]]
+     * @return オプションマップ
+     */
+    public static Map<String, String> parseOption(String optionString) {
+        Map<String, String> optionMap = new HashMap<>();
+        if (isNotBlank(optionString)) {
+            String[] options = split(optionString, ";");
+            for (String option : options) {
+                String[] o = split(option, "=");
+                optionMap.put(o[0], o[1]);
+            }
+        }
+
+        return optionMap;
     }
 
     /**
@@ -82,12 +102,42 @@ public class WtUtils {
         return obj;
     }
 
+    /**
+     * 文字列を分割（カンマ区切り）
+     * @param value 文字列
+     * @return 文字列配列
+     */
     public static String[] split(String value) {
         return split(value, -1);
     }
+
+    /**
+     * 文字列を分割
+     * @param value 文字列
+     * @param delim 区切り文字
+     * @return 文字列配列
+     */
+    public static String[] split(String value, String delim) {
+        return split(value, delim, -1);
+    }
+
+    /**
+     * 文字列を分割（カンマ区切り）
+     * @param value 文字列
+     * @param size 分割後の配列の大きさ
+     * @return 文字列配列
+     */
     public static String[] split(String value, int size) {
         return split(value, ",", size);
     }
+
+    /**
+     * 文字列を分割
+     * @param value 文字列
+     * @param delim 区切り文字
+     * @param size 分解後の配列の大きさ
+     * @return 文字列配列
+     */
     public static String[] split(String value, String delim, int size) {
         String[] values = value.split(delim);
         if (-1 < size) {
@@ -147,7 +197,8 @@ public class WtUtils {
             }
             By by = byType.getByInstance(WtUtils.formatValues(query[0], values));
             if (1 < query.length && isNotBlank(query[1])) {
-                return driver.findElements(by).get(Integer.parseInt(query[1]));
+                int index = Integer.parseInt(WtUtils.formatValues(query[1], values));
+                return driver.findElements(by).get(index);
 
             } else {
                 return driver.findElement(by);

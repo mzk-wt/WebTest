@@ -68,6 +68,7 @@ public enum ActionType {
      *****************************************************************/
     // 繰り返し処理
     FOR,
+    FORELEM,
     ENDFOR;
 
     /**
@@ -75,7 +76,7 @@ public enum ActionType {
      * @return
      */
     public boolean startChildAction() {
-        if (this.equals(FOR)) {
+        if (this.equals(FOR) || this.equals(FORELEM)) {
             return true;
         } else {
             return false;
