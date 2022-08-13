@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import webtest.keys.InputKeys;
@@ -238,7 +240,8 @@ public class WtWebDriver {
      * @return
      */
     public WebElement findElement(By by) {
-        return driver.findElement(by);
+        return new WebDriverWait(driver, Duration.ofSeconds(1).getSeconds())
+                .until(driver -> driver.findElement(by));
     }
 
     /**
@@ -247,7 +250,8 @@ public class WtWebDriver {
      * @return
      */
     public List<WebElement> findElements(By by) {
-        return driver.findElements(by);
+        return new WebDriverWait(driver, Duration.ofSeconds(1).getSeconds())
+                .until(driver -> driver.findElements(by));
     }
 
     /**
