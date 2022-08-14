@@ -7,4 +7,9 @@ WebアプリのUIテスト自動化ツール
 - Javaによる拡張実装　※準備中
 
 ## Usage
+#### Install
+1.　クローン
+```
+git clone https://github.com/mzk-wt/WebTest.git
+```
 
