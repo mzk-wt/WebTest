@@ -13,8 +13,7 @@ WebアプリのUIテスト自動化ツール
 ```
 git clone https://github.com/mzk-wt/WebTest.git
 ```
-
-
+　　
 2. Gradleプロジェクトとしてインポート
 
 #### Execution
