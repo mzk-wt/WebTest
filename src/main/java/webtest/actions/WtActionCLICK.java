@@ -8,7 +8,7 @@ import webtest.core.WtUtils;
 import webtest.core.WtWebDriver;
 
 /**
- * ドロップダウン選択アクション（SELECT）
+ * クリックアクション（CLICK）
  * <pre>
  * (アクションパラメータ)
  * [0]:要素を特定するための検索文字列
