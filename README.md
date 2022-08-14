@@ -14,11 +14,12 @@ WebアプリのUIテスト自動化ツール
 git clone https://github.com/mzk-wt/WebTest.git
 ```
 
-1. Gradleプロジェクトとしてインポート
+
+2. Gradleプロジェクトとしてインポート
 
 #### Execution
 1. シナリオ作成
-1. webtest.WebTest.javaを実行  
+2. webtest.WebTest.javaを実行  
 【コマンドラインパラメータ】  
 　[0]ブラウザ種別（"chrome", "edge", "firefox"）  
 　[1]出力フォルダのパス（フルパス）  
