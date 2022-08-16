@@ -7,3 +7,4 @@ build
 bin/*
 .project
 .classpath
+/java_pid32712.hprof

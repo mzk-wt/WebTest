@@ -7,9 +7,19 @@
  */
 
 plugins {
+    // 依存ライブラリを含めたjarファイルを作成するためのプラグイン
+    // "sh gradlew shadowJar"でビルドする
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
 }
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+jar.baseName = 'WebTest'
+version = '0.1'
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -33,6 +43,7 @@ dependencies {
     implementation 'io.github.bonigarcia:webdrivermanager:5.2.1'
 }
 
+/*
 test {
     // JUnit platform を使う設定
     useJUnitPlatform()
@@ -46,3 +57,14 @@ test {
         exceptionFormat 'full'
     }
 }
+*/
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+        attributes 'Main-Class' : 'webtest.WebTest'
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    //with jar
+}
+
