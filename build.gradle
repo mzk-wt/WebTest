@@ -16,8 +16,8 @@ plugins {
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 14
+targetCompatibility = 14
 jar.baseName = 'WebTest'
 version = '0.1'
 
@@ -41,6 +41,9 @@ dependencies {
     // Selenium
     implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
     implementation 'io.github.bonigarcia:webdrivermanager:5.2.1'
+
+    // Jackson
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.0.0'
 }
 
 /*
@@ -64,7 +67,5 @@ jar {
         attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
         attributes 'Main-Class' : 'webtest.WebTest'
     }
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    //with jar
+    // from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
-
